@@ -2,7 +2,7 @@
 
 I brought a Reolink Doorbell Chime and was disappointed to find I couldn’t use it with Home Assistant - it seems to pair directly with the Reolink Doorbell, and I have a Unifi doorbell.  Instead of throwing it away, I thought I would crack it open and see if I could flash my own firmware to it - but I didn’t recognise the chip.
 
-<img src="pics/internals.jpeg" width="600" alt="New Internals"">
+<img src="pics/internals.jpeg" width="600" alt="New Internals">
 
 In for a penny, in for a pound I thought I will use the nice case and power supply, replacing the internals with an ESP32 and DSP.
 This is the code for project.
