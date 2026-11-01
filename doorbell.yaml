@@ -25,13 +25,14 @@ api:
 ota:
   - platform: esphome
     password: !secret ota_password
+    # Migration only: remove allow_plaintext_upload and password once flashed.
+    encryption:
+      allow_plaintext_upload: true
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
-web_server:
-  
 i2s_audio:
   i2s_lrclk_pin: GPIO07
   i2s_bclk_pin: GPIO08

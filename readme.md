@@ -24,9 +24,9 @@ $ pipx install esphome
 # Add some dependencies to the virtual env
 $ pipx runpip esphome install python-magic pillow==11.3.0 cairosvg
 
-# Install the wind tunnel (first time - your device name will vary)
+# Install the doorbell (first time - your device name will vary)
 $ ~/.local/bin/esphome run --device=/dev/tty.usbmodem31301 doorbell.yaml
 
-# Install the wind tunnel (susequent times, via WiFi)
+# Install the doorbell (subsequent times, via WiFi)
 $ ~/.local/bin/esphome run doorbell.yaml
 ```
