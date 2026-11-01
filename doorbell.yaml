@@ -74,3 +74,10 @@ button:
       - media_player.speaker.play_on_device_media_file:
           media_file: front_door_sound
           announcement: true
+
+# Timestamps for the syslog in debug.yaml. chrony on Home Assistant; ESPHome
+# ignores the DHCP NTP option.
+time:
+  - platform: sntp
+    servers:
+      - 192.168.0.12
