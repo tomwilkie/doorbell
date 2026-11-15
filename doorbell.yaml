@@ -29,6 +29,9 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  # Light power save delays the play command by up to a DTIM interval, and a
+  # doorbell should ring at once. The chime is mains powered.
+  power_save_mode: none
 
 i2s_audio:
   i2s_lrclk_pin: GPIO07
@@ -57,10 +60,37 @@ media_player:
   - platform: speaker
     name: "Doorbell Speaker"
     task_stack_in_psram: true
+    # Never fully silent, so the bell can't be muted by a slip of the slider.
+    volume_min: 0.2
+    # Ask Home Assistant for 48 kHz mono, the I2S speaker's own format, so the
+    # resamplers pass audio through untouched. front_door.flac is 48 kHz mono
+    # for the same reason.
     media_pipeline:
       speaker: media_speaker
+      format: FLAC
+      sample_rate: 48000
+      num_channels: 1
     announcement_pipeline:
       speaker: announcement_speaker
+      format: FLAC
+      sample_rate: 48000
+      num_channels: 1
+    # Duck music under the chime and announcements, and restore it after.
+    on_announcement:
+      - mixer_speaker.apply_ducking:
+          id: media_mixer_speaker
+          decibel_reduction: 20
+          duration: 0s
+    on_state:
+      - if:
+          condition:
+            not:
+              media_player.is_announcing:
+          then:
+            - mixer_speaker.apply_ducking:
+                id: media_mixer_speaker
+                decibel_reduction: 0
+                duration: 1s
     files:
       - id: front_door_sound
         file: front_door.flac
